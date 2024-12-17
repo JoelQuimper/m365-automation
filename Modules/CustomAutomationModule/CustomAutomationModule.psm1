@@ -22,6 +22,7 @@ function Connect-GraphContext {
         }
 
         # set default resource group
+        "Setting default resource group to $ResourceGroupName"
         Set-AzDefault -ResourceGroupName $ResourceGroupName
 
         # First check if Register-SecretVault AzKV is already registered
