@@ -9,7 +9,7 @@ param (
     [array]$TeamOwners,
 
     [Parameter(Mandatory = $false)]
-    [string]$TeamTemplateName = "DEFAULT"
+    [string]$TeamTemplateName = "Basic"
 )
 
 "Creating team $TeamName with description $TeamDescription and template $TeamTemplateName"
@@ -17,12 +17,61 @@ foreach ($owner in $TeamOwners) {
     "Owner: $owner"
 }
 
-# Load the function to connect to Microsoft Graph and manage environment
-. "./Create-GraphConnectionFunction.ps1"
+$KeyVaultName = "kv-automation-jq"
+$ResourceGroupName = "rg-automation"
+try {
+    $SubscriptionId = "e79c36e6-8354-4130-a60b-694835221fef"
 
-Connect-GraphContext -KeyVaultName "kv-m365admin-jq" -SubscriptionId "e79c36e6-8354-4130-a60b-694835221fef"
-$groups = Get-MgGroup
-foreach ($group in $groups) {
-    "group - $($group.DisplayName)"
+    # Connect to Graph using custom module
+    Connect-GraphContext -KeyVaultName $KeyVaultName -ResourceGroupName $ResourceGroupName -SubscriptionId $SubscriptionId
+
+    # get owners guid
+    $owners = @()
+    foreach ($owner in $TeamOwners) {
+        $ownerGraph = Get-MgUser -UserId $owner
+        $owners += "https://graph.microsoft.com/v1.0/users/$($ownerGraph.Id)"
+    }
+
+    $basicTemplate = @{
+        groupTemplate = @{
+            description = $TeamDescription
+            displayName = $TeamName
+            groupTypes = @(
+                "Unified"
+            )
+            visibility = "Private"
+            mailEnabled = $true
+            mailNickname = "basic-$TeamName" #on devrait ajouter une function au module afin de générer un mailNickname à partir du displayName
+            securityEnabled = $false
+            "owners@odata.bind" = $owners
+        }
+        teamTemaplate = @{
+            memberSettings = @{
+                allowCreatePrivateChannels = $true
+                allowCreateUpdateChannels = $true
+            }
+            messagingSettings = @{
+                allowUserEditMessages = $true
+                allowUserDeleteMessages = $true
+            }
+            funSettings = @{
+                allowGiphy = $true
+                giphyContentRating = "strict"
+            }
+        }
+    }
+
+    "Creating group first in order to control mailnickname and siteurl"
+    $group = New-MgGroup -BodyParameter $basicTemplate.groupTemplate
+    "Group created successfully. GroupId: $($group.Id)"
+
+    Start-Sleep -Seconds 30
+
+    "Adding Team to group"
+    Set-MgGroupTeam -GroupId $group.Id -BodyParameter $basicTemplate.teamTemaplate
+
+    "Team $TeamName created successfully."
+} catch {
+    Write-Error -Message $_.Exception
+    throw $_.Exception
 }
-
