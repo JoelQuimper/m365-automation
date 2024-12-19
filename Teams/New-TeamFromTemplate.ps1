@@ -12,17 +12,13 @@ param (
     [string]$TeamTemplateName = "Basic"
 )
 
-$KeyVaultName = "kv-automation-jq"
-$ResourceGroupName = "rg-automation"
-$SubscriptionId = "e79c36e6-8354-4130-a60b-694835221fef"
-
 "Creating team $TeamName with description $TeamDescription and template $TeamTemplateName"
 foreach ($owner in $TeamOwners) {
     "Owner: $owner"
 }
 try {
     # Connect to Graph using custom module
-    Connect-GraphContext -KeyVaultName $KeyVaultName -ResourceGroupName $ResourceGroupName -SubscriptionId $SubscriptionId
+    Connect-GraphContext
 
     # get owners guid
     $owners = @()

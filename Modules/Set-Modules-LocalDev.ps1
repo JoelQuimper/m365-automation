@@ -17,6 +17,10 @@
     Auteur: Joël Quimper
     Date: 2024-12-02
 #>
+# definition des variables d'environnement pour le keyvault
+$env:KEYVAULT_NAME= "kv-m365admin-jq"
+$env:KEYVAULT_SUBSCRIPTION_ID= "e79c36e6-8354-4130-a60b-694835221fef"
+
 # Importation des modules PowerShell SecretManagement
 $secretManagementVersion = "1.1.2"
 $secretManagementPowerShellModulePath = "C:\src\PowerShellModules\Microsoft.PowerShell.SecretManagement\$secretManagementVersion\Microsoft.PowerShell.SecretManagement.psd1"
