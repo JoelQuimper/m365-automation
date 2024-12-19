@@ -13,6 +13,11 @@
     En mode interactif, simplement les ajouter comme variables d'environnement. En mode Azure Automation, elle doivent 
     être ajoutées dans les variables qui sont sous "Shared Resources".
 
+    Le keyvault doit contenir les secrets suivants:
+    - tenantId
+    - clientId
+    - clientSecret
+
 .PARAMETER KeyVaultName
     Nom du Key Vault Azure contenant les secrets d'identification pour se connecter à Microsoft Graph.  Si non spécifié, 
     la fonction tentera de se connecter en utilisant des variables de l'environnement.
@@ -54,7 +59,7 @@ function Connect-GraphContext {
                 throw "KeyVaultName and SubscriptionId are required."
             }
 
-            Connect-AzAccount
+            az login
         } else {
             "Running in Azure Automation"
             if (-not $KeyVaultName) {
@@ -72,27 +77,14 @@ function Connect-GraphContext {
                 throw "KeyVaultName and SubscriptionId are required."
             }
 
-            Connect-AzAccount -Identity
+            az login --identity
         }
 
-        
+        az account set --subscription $SubscriptionId
 
-        # First check if Register-SecretVault AzKV is already registered
-        $registeredVaults = Get-SecretVault
-        if ($registeredVaults.Name -contains $KeyVaultName) {
-            "$KeyVaultName vault is already registered."
-        } else {
-            "Registering $KeyVaultName vault."
-            $VaultParameters = @{
-                AZKVaultName = $KeyVaultName
-                SubscriptionId = $SubscriptionId
-            }
-            Register-SecretVault -Module Az.KeyVault -Name $KeyVaultName -VaultParameters $VaultParameters
-        }
-
-        $tenantId = Get-Secret -Name tenantId -Vault $KeyVaultName -AsPlainText
-        $clientId = Get-Secret -Name clientId -Vault $KeyVaultName -AsPlainText
-        $SecuredPasswordPassword = Get-Secret -Name clientSecret -Vault $KeyVaultName -AsPlainText | ConvertTo-SecureString -AsPlainText -Force
+        $tenantId = az keyvault secret show --name tenantId --vault-name $KeyVaultName --query value -o tsv
+        $clientId = az keyvault secret show --name clientId --vault-name $KeyVaultName --query value -o tsv
+        $SecuredPasswordPassword = az keyvault secret show --name clientSecret --vault-name $KeyVaultName --query value -o tsv | ConvertTo-SecureString -AsPlainText -Force
         $ClientSecretCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $clientId, $SecuredPasswordPassword
 
         # Connect to Microsoft Graph

@@ -21,12 +21,6 @@
 $env:KEYVAULT_NAME= "kv-m365admin-jq"
 $env:KEYVAULT_SUBSCRIPTION_ID= "e79c36e6-8354-4130-a60b-694835221fef"
 
-# Importation des modules PowerShell SecretManagement
-$secretManagementVersion = "1.1.2"
-$secretManagementPowerShellModulePath = "C:\src\PowerShellModules\Microsoft.PowerShell.SecretManagement\$secretManagementVersion\Microsoft.PowerShell.SecretManagement.psd1"
-Write-Output "Importing module: $secretManagementPowerShellModulePath"
-Import-Module $secretManagementPowerShellModulePath
-
 # Importation des modules Microsoft Graph
 $graphVersion = "2.25.0"
 $graphPowerShellModulePath = "C:\src\PowerShellModules\Microsoft.Graph\$graphVersion"
