@@ -36,8 +36,7 @@ Description = 'Provided as is with no waranty or support.'
 PowerShellVersion = '7.0'
 
 # Modules that must be imported into the global environment prior to importing this module
-RequiredModules = @(@{ModuleName = 'Microsoft.PowerShell.SecretManagement'; RequiredVersion = '1.1.2'; },
-                    @{ModuleName = 'Microsoft.Graph.Authentication'; RequiredVersion = '2.25.0'; })
+RequiredModules = @(@{ModuleName = 'Microsoft.Graph.Authentication'; RequiredVersion = '2.25.0'; })
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no function to export.
 FunctionsToExport = "Connect-GraphContext"
