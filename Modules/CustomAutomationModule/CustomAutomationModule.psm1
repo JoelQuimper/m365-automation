@@ -97,4 +97,53 @@ function Connect-GraphContext {
     }
 }
 
-Export-ModuleMember Connect-GraphContext
+<#
+.SYNOPSIS
+    Fonction de nettoyage de chaine de caracteres afin de pouvoir l'utiliser dans Entra.
+
+.DESCRIPTION
+    Cette fonction permet de nettoyer une chaine de caractères afin de pouvoir l'utiliser dans Entra.  Elle remplace les 
+    caractères spéciaux par des tirets, met le tout en minuscule et s'assure qu'il n'y a pas de tirets en début ou en fin.
+    Elle remplace aussi les caractères spéciaux français par leur équivalent anglais.
+
+.PARAMETER GroupName
+    Nom du groupe à netttoyer.
+
+.NOTES
+    Auteur: Joël Quimper
+    Date: 2024-12-23
+#>
+function Set-EntraGroupName {
+    param (
+        [Parameter(Mandatory = $true)]
+        [string]$GroupName
+    )
+
+    # Convert the name to lowercase
+    $GroupName = $GroupName.ToLower()
+
+    # Replace French special characters with their English equivalent
+    $GroupName = $GroupName -replace 'é|è|ê|ë', 'e'
+    $GroupName = $GroupName -replace 'à|â|ä', 'a'
+    $GroupName = $GroupName -replace 'ù|û|ü', 'u'
+    $GroupName = $GroupName -replace 'ç', 'c'
+    $GroupName = $GroupName -replace 'ô|ö', 'o'
+    $GroupName = $GroupName -replace 'î|ï', 'i'
+    $GroupName = $GroupName -replace 'ÿ', 'y'
+    $GroupName = $GroupName -replace 'œ', 'oe'
+    $GroupName = $GroupName -replace 'æ', 'ae'
+
+    # Replace invalid characters with an an hyphen
+    $escapedName = $GroupName -replace '[^a-zA-Z0-9-]', '-'
+
+    # Ensure the name does not start or end with a hyphen
+    $escapedName = $escapedName.Trim('-')
+
+    # Replace multiple hyphens with a single hyphen
+    $escapedName = $escapedName -replace '--+', '-'
+
+    # Return the escaped name
+    return $escapedName
+}
+
+Export-ModuleMember -Function Connect-GraphContext, Set-EntraGroupName

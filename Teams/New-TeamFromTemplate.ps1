@@ -30,13 +30,13 @@ try {
     $basicTemplate = @{
         groupTemplate = @{
             description = $TeamDescription
-            displayName = $TeamName
+            displayName = "(Basic) $TeamName"
             groupTypes = @(
                 "Unified"
             )
             visibility = "Private"
             mailEnabled = $true
-            mailNickname = "basic-$TeamName" #on devrait ajouter une function au module afin de générer un mailNickname à partir du displayName
+            mailNickname = "basic-$(Set-EntraGroupName -GroupName $TeamName)"
             securityEnabled = $false
             "owners@odata.bind" = $owners
         }
