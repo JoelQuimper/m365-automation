@@ -12,7 +12,7 @@
 RootModule = 'CustomAutomationModule.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.6'
+ModuleVersion = '1.0.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -39,7 +39,7 @@ PowerShellVersion = '7.0'
 RequiredModules = @(@{ModuleName = 'Microsoft.Graph.Authentication'; RequiredVersion = '2.25.0'; })
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no function to export.
-FunctionsToExport = "Connect-GraphContext"
+FunctionsToExport = @("Connect-GraphContext", "Set-EntraGroupName")
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
 PrivateData = @{
