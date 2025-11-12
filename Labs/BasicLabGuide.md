@@ -37,7 +37,9 @@ The lab is build so a user can request to see its profile information from Entra
     - Open the cloned repository in Visual Studio Code.
     - Find the "Get-UserBasicDetails.ps1" file and open it.
     ![code](images/code.png)
-    - Update the script with your app registration details (client ID, tenant ID, client secret).
+    - Update the script with your app registration details (client ID, tenant ID, client secret).  
+    **IMPORTANT**: we are putting the client secret in plain text for simplicity in this lab. You should never do this in real life. You should consider using Azure Key Vault to handle secrets. Some sample of this are available in this repository.
+    - Save the script.
     - Test the script locally to ensure it works as expected. You can do this by running the script in Visual Studio Code or PowerShell terminal. Make sure it retrieves user profile information correctly.
     ![pwsh-result](images/pwsh-result.png)
     
