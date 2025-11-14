@@ -12,13 +12,20 @@ The lab is build so a user can request to see its profile information from Entra
     - Install Azure CLI [How to install the Azure CLI | Microsoft Learn](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
     - Ideally a Visual Studio Subscription, this includes a test tenant plus monthly Azure credits.
 
-2. **Create the App Registration**: Follow the steps below to create an app registration in Azure AD.
+2. **Create the App Registration**: Follow the steps below to create an app registration in Entra.
     - In the Entra admin center, navigate to "App registrations" 
     - Click on "New registration"
-    - Name your application (e.g., "LabGraphApp"). Keep the default settings for supported account types and redirect URI.
-    - Set the API permissions to include "User.ReadBasic.All" under Microsoft Graph with admin consent. (it must be an application permission, not delegated)
+        -  Name your application (e.g., "LabGraphApp"). Keep the default settings for supported account types and redirect URI.
+        - Under Manage>API permissions>Add permissions
+        - Select the Graph API category with the Application Permission (not the Delegated permissions) 
+        - Search for "User.ReadBasic.All"
+    - After permissions have been created, you will have to grant admin consent.  It should look like this:
     ![API Permissions](images/api-permission.png)
-    - Create a client secret and note down the Application (client) ID, Directory (tenant) ID, and the client secret value.
+    - Create a client secret and note down the Application (client) ID, Directory (tenant) ID, and the client secret value. 
+        - Under  Manage>Certificates & Secrets
+        - Toggle to Clients Secrets, and add client secret
+        - Provide a Description and leave the recommended expiry
+        - Ensure that you copy the value of the secret not its id. 
     - **WARNING**: If you are doing this lab on your production tenant, make sure to securely use and store the client secret, as it provides access to your read all your users.
 
 3. **Set Up SharePoint List**: Create a SharePoint list to capture user requests.
