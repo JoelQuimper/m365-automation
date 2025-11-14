@@ -1,5 +1,5 @@
 ## Lab Guide
-Welcome to this simple automation lab! This document will help you navigate through the a simple lab designed to enhance your learning experience. Follow the instructions below to get started.
+Welcome to this simple automation lab! This document will help you navigate through the main steps required to to build a simple automation solution using Logic App, Microsoft Graph API and PowerShell. Follow the instructions below to get started.
 
 The lab is build so a user can request to see its profile information from Entra using Microsoft Graph API and PowerShell by simply filling a form in SharePoint.
 
