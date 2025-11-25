@@ -22,7 +22,7 @@ $env:KEYVAULT_NAME= "kv-m365admin-jq"
 $env:KEYVAULT_SUBSCRIPTION_ID= "e79c36e6-8354-4130-a60b-694835221fef"
 
 # Importation des modules Microsoft Graph
-$graphVersion = "2.25.0"
+$graphVersion = "2.32.0"
 $graphPowerShellModulePath = "C:\src\PowerShellModules\Microsoft.Graph\$graphVersion"
 $graphAuthenticationPowerShellModule = "$graphPowerShellModulePath\Microsoft.Graph.Authentication\$graphVersion\Microsoft.Graph.Authentication.psd1"
 $graphPowerShellModule = "$graphPowerShellModulePath\Microsoft.Graph\$graphVersion\Microsoft.Graph.psd1"
