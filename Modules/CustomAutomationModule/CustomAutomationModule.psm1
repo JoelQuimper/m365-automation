@@ -134,4 +134,4 @@ function Set-EntraGroupName {
     return $escapedName
 }
 
-Export-ModuleMember -Function Connect-GraphContext, Set-EntraGroupName
+Export-ModuleMember -Function Connect-GraphContextFromKeyVault,Connect-GraphContext, Set-EntraGroupName
