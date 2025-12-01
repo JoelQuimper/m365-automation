@@ -62,7 +62,9 @@ function Connect-GraphContextFromKeyVault {
 .DESCRIPTION
     This function connects to Microsoft Graph either in interactive mode (locally) or in Azure Automation
     using Managed Identity. When using it in Azure Automation, the required scopes must be assigned to the Managed Identity in Entra.  
-    When running locally, it will prompt for interactive login. The required scopes must be previously granted for all users by an administrator.
+    When running locally, it will prompt for interactive login. The required scopes must be previously granted by an administrator.
+    Since I am using the interactive mode only on my development tenant, I usually manually do a Connect-MgGraph with my required scopes
+    and grant admin consent prior to running this function.
 #>
 function Connect-GraphContext {
     param (
@@ -87,19 +89,15 @@ function Connect-GraphContext {
 
 <#
 .SYNOPSIS
-    Fonction de nettoyage de chaine de caracteres afin de pouvoir l'utiliser dans Entra.
+    Function to clean a string to make it usable in Entra.
 
 .DESCRIPTION
-    Cette fonction permet de nettoyer une chaine de caractères afin de pouvoir l'utiliser dans Entra.  Elle remplace les 
-    caractères spéciaux par des tirets, met le tout en minuscule et s'assure qu'il n'y a pas de tirets en début ou en fin.
-    Elle remplace aussi les caractères spéciaux français par leur équivalent anglais.
+    This function cleans a string to make it usable in Entra. It replaces special characters with hyphens,
+    converts everything to lowercase, and ensures there are no hyphens at the beginning or end.
+    It also replaces French special characters with their English equivalents.
 
 .PARAMETER GroupName
-    Nom du groupe à netttoyer.
-
-.NOTES
-    Auteur: Joël Quimper
-    Date: 2024-12-23
+    Name of the group to clean.
 #>
 function Set-EntraGroupName {
     param (
