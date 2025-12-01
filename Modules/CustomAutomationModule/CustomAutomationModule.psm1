@@ -75,7 +75,8 @@ function Connect-GraphContext {
             "Running in Azure Automation"
             az login --identity --allow-no-subscriptions
             $token = az account get-access-token --resource-type ms-graph | ConvertFrom-Json
-            return Connect-MgGraph -AccessToken $token.accessToken
+            $secureStringToken = ConvertTo-SecureString -String $token.accessToken -AsPlainText -Force
+            return Connect-MgGraph -AccessToken $secureStringToken
         }
     }
     catch {
