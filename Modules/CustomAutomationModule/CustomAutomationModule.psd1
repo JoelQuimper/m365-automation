@@ -39,7 +39,7 @@ PowerShellVersion = '7.0'
 RequiredModules = @(@{ModuleName = 'Microsoft.Graph.Authentication'; ModuleVersion = '2.25.0'; })
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no function to export.
-FunctionsToExport = @("Connect-GraphContext", "Set-EntraGroupName")
+FunctionsToExport = @("Connect-GraphContextFromKeyVault", "Connect-GraphContext", "Set-EntraGroupName")
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
 PrivateData = @{
