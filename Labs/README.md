@@ -1,0 +1,1 @@
+Please note that the content of this lab has been moved to a new repository to better organize our materials. You can now find the updated lab instructions and resources at the following link: https://github.com/JoelQuimper/presentations-and-labs/tree/main/Labs/M365-Automation
